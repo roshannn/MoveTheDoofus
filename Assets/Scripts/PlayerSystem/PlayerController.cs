@@ -9,7 +9,7 @@ namespace PlayerSystem
 {
     public class PlayerController
     {
-        private PlayerView playerView;
+        public PlayerView playerView;
         private PlayerModel playerModel;
 
         public Vector3 movementVector;

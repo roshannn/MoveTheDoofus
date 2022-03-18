@@ -7,13 +7,13 @@ namespace PlayerSystem
     public class PlayerSystem : MonoSingleton<PlayerSystem>
     {
         public PlayerFactory playerFactory;
-        PlayerController playerController;
+        public PlayerController playerController;
 
         protected override void Awake()
         {
             base.Awake();
         }
-        private void Start()
+        private void OnEnable()
         {
             playerController = new PlayerController();
 
