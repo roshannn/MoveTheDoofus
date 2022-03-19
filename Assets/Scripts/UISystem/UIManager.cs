@@ -1,4 +1,3 @@
-using MonoSingleton;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using TMPro;
 
 namespace UIManager
 {
-    public class UIManager : MonoBehaviour
+    public class UIManager : MonoBehaviour //InheritMonoSingleton to convert into singleton
     {
         [SerializeField] private GameObject MainScreenPanel;
         [SerializeField] private GameObject PlayScreenPanel;
