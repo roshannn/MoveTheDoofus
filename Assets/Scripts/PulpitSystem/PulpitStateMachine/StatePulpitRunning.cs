@@ -20,7 +20,6 @@ namespace PulpitSystem
         {
             timeElapsed = 0;
             currPulpit = StateObject;
-            Debug.Log("Entering RUnning State");
             currPulpit.CurrPulpitState = PulpitState.Running;
         }
         public void Update()

@@ -22,20 +22,26 @@ namespace PulpitSystem
         protected override void Awake()
         {
             base.Awake();
-            directionSystem = new DirectionSystem();
+            GameManager.InitializeGame += InitializeFirstPulpit;
+            GameManager.GameOver += GameOver;
         }
 
+        private void GameOver()
+        {
+            SpawnPulpit -= SpawnNewPulpit;
+            pulpitPool.ReturnAllItemsToPool();
+        }
         private void Start()
         {
+            directionSystem = new DirectionSystem();
             pulpitQueue = new Queue<PulpitController>();
-            SpawnPulpit += SpawnNewPulpit;
             spawnTimer = GameManager.Instance.GameData.pulpitData.PulpitSpawnTime;
-            InitializeFirstPulpit();
-
+            //InitializeFirstPulpit();
         }
 
-        private void InitializeFirstPulpit()
+        public void InitializeFirstPulpit()
         {
+            SpawnPulpit += SpawnNewPulpit;
             var Pulpit = pulpitPool.GetItemFromPool();
             pulpitQueue.Enqueue(Pulpit);
             Pulpit.gameObject.transform.position = Vector3.zero;
@@ -49,9 +55,9 @@ namespace PulpitSystem
             Direction randomDirection = directionSystem.GetRandomDirection();
             var Pulpit = pulpitPool.GetItemFromPool();
             pulpitQueue.Enqueue(Pulpit);
+            SetPulpitPosition(Pulpit, randomDirection);
             Pulpit.gameObject.SetActive(true);
             Pulpit.PulpitStateMachine.stateMachine.ChangeState(Pulpit.PulpitStateMachine.InitialiseState);
-            SetPulpitPosition(Pulpit, randomDirection);
             lastSpawnedPulpitPos = Pulpit.transform.position;
 
         }
@@ -78,6 +84,8 @@ namespace PulpitSystem
 
         private void OnDestroy()
         {
+            GameManager.GameOver -= GameOver;
+
             directionSystem = null;
         }
     }

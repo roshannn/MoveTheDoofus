@@ -10,8 +10,6 @@ namespace PulpitSystem
         public PulpitController pulpitView;
         public void OnStateEnter(PulpitController StateObject)
         {
-            Debug.Log("Disabled State");
-
             pulpitView = StateObject;
             pulpitView.CurrPulpitState = PulpitState.Disabled;
             PulpitSystem.Instance.pulpitQueue.Dequeue();

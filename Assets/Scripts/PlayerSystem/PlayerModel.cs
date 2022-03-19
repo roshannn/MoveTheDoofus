@@ -9,6 +9,8 @@ namespace PlayerSystem
 
         public float PlayerSpeed;
 
+        public float score;
+
         public PlayerModel(PlayerData playerData)
         {
             PlayerSpeed = playerData.Speed;

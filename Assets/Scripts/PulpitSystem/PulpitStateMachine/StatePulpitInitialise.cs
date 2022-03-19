@@ -11,7 +11,6 @@ namespace PulpitSystem
        
         public void OnStateEnter(PulpitController StateObject)
         {
-            Debug.Log("Entering Init State");
             currPulpitView = StateObject;
             currPulpitView.CurrPulpitState = PulpitState.Initialise;
             currPulpitView.gameObject.SetActive(true);

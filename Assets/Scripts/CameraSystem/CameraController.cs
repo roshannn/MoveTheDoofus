@@ -1,3 +1,4 @@
+using GameSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,10 @@ namespace CameraSystem
 
         private void LateUpdate()
         {
-            this.gameObject.transform.position = PlayerSystem.PlayerSystem.Instance.playerController.playerView.transform.position + offset;
+            if (GameManager.gameState == GameState.PlayState)
+            {
+                this.gameObject.transform.position = PlayerSystem.PlayerSystem.Instance.playerController.playerView.transform.position + offset; 
+            }
         }
     } 
 }

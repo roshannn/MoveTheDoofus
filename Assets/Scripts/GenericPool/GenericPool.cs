@@ -8,6 +8,7 @@ namespace GenericPool
     public class GenericPool<T> : MonoBehaviour where T : MonoBehaviour
     {
         public List<T> pooledItems = new List<T>();
+        public List<T> itemsInUse = new List<T>();
         public int initItemCount;
         [SerializeField]protected AbstractFactory<T> itemFactory;
         public bool isExpandable = false;
@@ -26,12 +27,16 @@ namespace GenericPool
             if (pooledItems.Count > 0)
             {
                 T toReturn = pooledItems[0];
+                itemsInUse.Add(pooledItems[0]);
                 pooledItems.Remove(pooledItems[0]);
                 return toReturn;
             }
             else if (isExpandable)
             {
-                return itemFactory?.GetNewInstance();
+                T newInstance = itemFactory?.GetNewInstance();
+                itemsInUse.Add(newInstance);
+
+                return newInstance;
             }
             return null;
         }
@@ -39,7 +44,21 @@ namespace GenericPool
         public void ReturnItemToPool(T item)
         {
             pooledItems.Add(item);
+            if (itemsInUse.Contains(item))
+            {
+                itemsInUse.Remove(item);
+            }
             item.gameObject.SetActive(false);
+        }
+
+        public void ReturnAllItemsToPool()
+        {
+            foreach(T item in itemsInUse)
+            {
+                pooledItems.Add(item);
+                item.gameObject.SetActive(false);
+            }
+            itemsInUse.Clear();
         }
     }
 
